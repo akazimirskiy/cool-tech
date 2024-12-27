@@ -9,3 +9,5 @@ kafka:
     default:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
+logging.level.org.apache.kafka.clients.producer: DEBUG
