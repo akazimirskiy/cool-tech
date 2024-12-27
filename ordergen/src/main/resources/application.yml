@@ -1,0 +1,11 @@
+#Thu Dec 26 17:33:19 UTC 2024
+micronaut:
+  application:
+    name: ordergen
+kafka:
+  bootstrap:
+    servers: kafka:9092
+  producers:
+    default:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
