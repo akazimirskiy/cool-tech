@@ -6,7 +6,7 @@ import spock.lang.Specification
 import jakarta.inject.Inject
 
 @MicronautTest
-class PaymentServiceSpec extends Specification {
+class OrderServiceSpec extends Specification {
 
     @Inject
     EmbeddedApplication<?> application

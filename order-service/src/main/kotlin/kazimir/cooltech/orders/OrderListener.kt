@@ -1,4 +1,4 @@
-package kazimir.cooltech.payments
+package kazimir.cooltech.orders
 
 import io.micronaut.configuration.kafka.annotation.KafkaListener
 import io.micronaut.configuration.kafka.annotation.Topic

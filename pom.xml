@@ -8,6 +8,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>ordergen</module>
-        <module>payment-service</module>
+        <module>order-service</module>
+        <module>payments-api</module>
     </modules>
 </project>

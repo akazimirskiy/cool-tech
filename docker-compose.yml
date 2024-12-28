@@ -2,27 +2,11 @@ version: '3.8'
 services:
   payment-service:
     build:
-      context: ./payment-service
+      context: ./order-service
     depends_on:
       - kafka
     deploy:
       replicas: 3
-#    environment:
-#      - PARTITION_ID=0
-#  payment-service-1:
-#    build:
-#      context: ./payment-service
-#    depends_on:
-#      - kafka
-#    environment:
-#      - PARTITION_ID=1
-#  payment-service-2:
-#    build:
-#      context: ./payment-service
-#    depends_on:
-#      - kafka
-#    environment:
-#      - PARTITION_ID=2
   order-generator:
     build:
       context: ./ordergen
