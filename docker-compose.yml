@@ -2,6 +2,16 @@ version: '3.8'
 services:
   payment-service:
     build:
+      context: ./payment-service
+    depends_on:
+      - kafka
+  order-dispatcher:
+    build:
+      context: ./order-dispatcher
+    depends_on:
+      - kafka
+  order-service:
+    build:
       context: ./order-service
     depends_on:
       - kafka
@@ -21,7 +31,6 @@ services:
       - "2181:2181"
     volumes:
       - zookeeper-data:/var/lib/zookeeper/data
-
   kafka:
     image: confluentinc/cp-kafka:latest
     container_name: kafka

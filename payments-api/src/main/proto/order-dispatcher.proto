@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+option java_package = "kazimir.cooltech.proto";
+
+message Order {
+  string id = 1;
+  string userId = 2;
+  string productId = 3;
+  int32 quantity = 4;
+  double price = 5;
+}
+
+message DispatchResponse {
+  string id = 1;
+  string orderId = 2;
+  string status = 3;
+}
+
+service DispatcherService {
+  rpc DispatchOrder(Order) returns (DispatchResponse) {}
+}

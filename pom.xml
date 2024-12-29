@@ -9,6 +9,8 @@
     <modules>
         <module>ordergen</module>
         <module>order-service</module>
+        <module>order-dispatcher</module>
         <module>payments-api</module>
+        <module>payment-service</module>
     </modules>
 </project>
