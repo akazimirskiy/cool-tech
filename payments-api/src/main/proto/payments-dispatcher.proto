@@ -1,16 +1,9 @@
 syntax = "proto3";
 
-import "order-dispatcher.proto";
-option java_package = "kazimir.cooltech.proto";
-
-message Payment {
-    string id = 1;
-    string orderId = 2;
-    string userId = 3;
-    double amount = 4;
-    string status = 5;
-}
+import "order.proto";
+import "dispatch-response.proto";
+package kazimir.cooltech.proto;
 
 service PayOrderService {
-    rpc pay(Order) returns (DispatchResponse) {}
+    rpc pay(kazimir.cooltech.proto.Order) returns (kazimir.cooltech.proto.DispatchResponse) {}
 }

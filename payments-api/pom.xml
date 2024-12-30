@@ -17,6 +17,11 @@
         <!-- Зависимости для gRPC и Protobuf -->
         <dependency>
             <groupId>com.google.protobuf</groupId>
+            <artifactId>protobuf-java</artifactId>
+            <version>4.29.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.protobuf</groupId>
             <artifactId>protobuf-kotlin</artifactId>
             <version>3.21.12</version>
         </dependency>
@@ -28,7 +33,7 @@
         <dependency>
             <groupId>io.grpc</groupId>
             <artifactId>grpc-protobuf</artifactId>
-            <version>1.55.1</version>
+            <version>1.69.0</version>
         </dependency>
         <dependency>
             <groupId>io.grpc</groupId>
@@ -57,25 +62,25 @@
                             <goal>compile-custom</goal>
                         </goals>
                         <phase>generate-sources</phase>
+                        <configuration>
+                            <protocArtifact>com.google.protobuf:protoc:4.29.2:exe:${os.detected.classifier}</protocArtifact>
+                            <protoSourceRoot>${project.basedir}/src/main/proto</protoSourceRoot>
+                            <outputDirectory>${project.build.directory}/generated-sources/proto</outputDirectory>
+                            <pluginId>grpc-java</pluginId>
+                            <pluginArtifact>io.grpc:protoc-gen-grpc-java:1.69.0:exe:${os.detected.classifier}</pluginArtifact>
+                            <protocPlugins>
+                                <protocPlugin>
+                                    <id>grpc-kotlin</id>
+                                    <groupId>io.grpc</groupId>
+                                    <artifactId>protoc-gen-grpc-kotlin</artifactId>
+                                    <version>1.4.1</version>
+                                    <classifier>jdk8</classifier>
+                                    <mainClass>io.grpc.kotlin.generator.GeneratorRunner</mainClass>
+                                </protocPlugin>
+                            </protocPlugins>
+                        </configuration>
                     </execution>
                 </executions>
-                <configuration>
-                    <pluginId>grpc-java</pluginId>
-                    <protoSourceRoot>${project.basedir}/src/main/proto</protoSourceRoot>
-                    <outputDirectory>${project.build.directory}/generated-sources/proto</outputDirectory>
-                    <pluginArtifact>io.grpc:protoc-gen-grpc-java:1.55.1:exe:${os.detected.classifier}</pluginArtifact>
-                    <protocArtifact>com.google.protobuf:protoc:3.21.12:exe:${os.detected.classifier}</protocArtifact>
-                    <protocPlugins>
-                        <protocPlugin>
-                            <id>grpc-kotlin</id>
-                            <groupId>io.grpc</groupId>
-                            <artifactId>protoc-gen-grpc-kotlin</artifactId>
-                            <version>1.2.0</version>
-                            <classifier>jdk7</classifier>
-                            <mainClass>io.grpc.kotlin.generator.GeneratorRunner</mainClass>
-                        </protocPlugin>
-                    </protocPlugins>
-                </configuration>
             </plugin>
             <!-- Плагин для распознавания операционной системы -->
             <plugin>
@@ -94,7 +99,7 @@
             <plugin>
                 <groupId>org.jetbrains.kotlin</groupId>
                 <artifactId>kotlin-maven-plugin</artifactId>
-                <version>1.9.25</version>
+                <version>2.1.0</version>
                 <executions>
                     <execution>
                         <id>compile</id>
