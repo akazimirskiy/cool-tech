@@ -1,0 +1,12 @@
+syntax="proto3";
+
+package kazimir.cooltech.proto;
+//option java_outer_classname = "Payment";
+
+message Payment {
+  string id = 1;
+  string order_id = 2;
+  string user_id = 3;
+  double amount = 4;
+  string status = 5;
+}

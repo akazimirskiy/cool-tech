@@ -1,0 +1,10 @@
+syntax="proto3";
+
+package kazimir.cooltech.proto;
+//option java_outer_classname = "DispatchResponse";
+
+message DispatchResponse {
+  string id = 1;
+  string order_id = 2;
+  string status = 3;
+}
