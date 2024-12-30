@@ -49,36 +49,23 @@
     </dependencies>
     <build>
         <plugins>
-            <!-- Плагин для генерации Kotlin-классов из proto -->
             <plugin>
                 <groupId>org.xolstice.maven.plugins</groupId>
                 <artifactId>protobuf-maven-plugin</artifactId>
                 <version>0.6.1</version>
+                <configuration>
+                    <!--suppress UnresolvedMavenProperty -->
+                    <protocArtifact>com.google.protobuf:protoc:4.29.2:exe:${os.detected.classifier}</protocArtifact>
+                    <pluginId>grpc-java</pluginId>
+                    <!--suppress UnresolvedMavenProperty -->
+                    <pluginArtifact>io.grpc:protoc-gen-grpc-java:1.69.0:exe:${os.detected.classifier}</pluginArtifact>
+                </configuration>
                 <executions>
                     <execution>
-                        <id>compile</id>
                         <goals>
                             <goal>compile</goal>
                             <goal>compile-custom</goal>
                         </goals>
-                        <phase>generate-sources</phase>
-                        <configuration>
-                            <protocArtifact>com.google.protobuf:protoc:4.29.2:exe:${os.detected.classifier}</protocArtifact>
-                            <protoSourceRoot>${project.basedir}/src/main/proto</protoSourceRoot>
-                            <outputDirectory>${project.build.directory}/generated-sources/proto</outputDirectory>
-                            <pluginId>grpc-java</pluginId>
-                            <pluginArtifact>io.grpc:protoc-gen-grpc-java:1.69.0:exe:${os.detected.classifier}</pluginArtifact>
-                            <protocPlugins>
-                                <protocPlugin>
-                                    <id>grpc-kotlin</id>
-                                    <groupId>io.grpc</groupId>
-                                    <artifactId>protoc-gen-grpc-kotlin</artifactId>
-                                    <version>1.4.1</version>
-                                    <classifier>jdk8</classifier>
-                                    <mainClass>io.grpc.kotlin.generator.GeneratorRunner</mainClass>
-                                </protocPlugin>
-                            </protocPlugins>
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>
