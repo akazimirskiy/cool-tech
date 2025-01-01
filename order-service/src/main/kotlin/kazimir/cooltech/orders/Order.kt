@@ -1,6 +1,9 @@
 package kazimir.cooltech.orders
 
-import java.math.BigInteger
-import java.util.UUID
+import io.micronaut.core.annotation.Introspected
+import io.micronaut.serde.annotation.Serdeable
+import java.util.*
 
-class Order(var id: UUID, var orderId: UUID, var amount: BigInteger)
+@Introspected
+@Serdeable
+data class Order(var id: UUID, var userId:UUID, var productId: UUID, var quantity: Int, var price: Double)

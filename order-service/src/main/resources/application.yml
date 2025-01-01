@@ -1,7 +1,11 @@
 #Thu Dec 26 17:33:19 UTC 2024
 micronaut:
   application:
-    name: payment-service
+    name: order-service
+dispatcher:
+  server:
+    host: order-dispatcher
+    port: 50051
 kafka:
   bootstrap:
     servers: kafka:9092

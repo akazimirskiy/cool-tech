@@ -8,6 +8,9 @@ services:
   order-dispatcher:
     build:
       context: ./order-dispatcher
+    container_name: order-dispatcher
+    ports:
+      - "50051:50051"
     depends_on:
       - kafka
   order-service:

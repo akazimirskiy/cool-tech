@@ -34,6 +34,41 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.google.protobuf</groupId>
+            <artifactId>protobuf-java</artifactId>
+            <version>4.29.2</version> <!-- Совместимая версия -->
+        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>io.micronaut.grpc</groupId>-->
+<!--            <artifactId>micronaut-grpc-server-runtime</artifactId>-->
+<!--            <version>4.8.0</version> &lt;!&ndash; Версия должна совпадать с вашей версией Micronaut &ndash;&gt;-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>io.grpc</groupId>-->
+<!--            <artifactId>grpc-core</artifactId>-->
+<!--            <version>1.69.0</version> &lt;!&ndash; Совместимая версия &ndash;&gt;-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>io.grpc</groupId>-->
+<!--            <artifactId>grpc-netty</artifactId>-->
+<!--            <version>1.69.0</version> &lt;!&ndash; Совместимая версия &ndash;&gt;-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>io.grpc</groupId>-->
+<!--            <artifactId>grpc-protobuf</artifactId>-->
+<!--            <version>1.69.0</version> &lt;!&ndash; Совместимая версия &ndash;&gt;-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>io.grpc</groupId>-->
+<!--            <artifactId>grpc-stub</artifactId>-->
+<!--            <version>1.69.0</version>-->
+<!--        </dependency>-->
+        <dependency>
+            <groupId>kazimir.cooltech</groupId>
+            <artifactId>payments-api</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
             <groupId>io.github.microutils</groupId>
             <artifactId>kotlin-logging</artifactId>
             <version>3.0.5</version>
@@ -54,6 +89,16 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
+            <groupId>io.micronaut.serde</groupId>
+            <artifactId>micronaut-serde-jackson</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.module</groupId>
+            <artifactId>jackson-module-kotlin</artifactId>
+            <version>2.17.2</version>
+        </dependency>
+        <dependency>
             <groupId>io.micronaut.kafka</groupId>
             <artifactId>micronaut-kafka</artifactId>
             <scope>compile</scope>
@@ -61,11 +106,6 @@
         <dependency>
             <groupId>io.micronaut.kotlin</groupId>
             <artifactId>micronaut-kotlin-runtime</artifactId>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.micronaut.serde</groupId>
-            <artifactId>micronaut-serde-jackson</artifactId>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -85,11 +125,7 @@
             <artifactId>logback-classic</artifactId>
             <scope>runtime</scope>
         </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.module</groupId>
-            <artifactId>jackson-module-kotlin</artifactId>
-            <scope>runtime</scope>
-        </dependency>
+
         <dependency>
             <groupId>io.micronaut.testresources</groupId>
             <artifactId>micronaut-test-resources-client</artifactId>
@@ -126,6 +162,11 @@
             <groupId>org.jetbrains.kotlinx</groupId>
             <version>1.5.0</version>
         </dependency>
+<!--        <dependency>-->
+<!--            <artifactId>order-dispatcher</artifactId>-->
+<!--            <groupId>kazimir.cooltech</groupId>-->
+<!--            <version>1.0.0-SNAPSHOT</version>-->
+<!--        </dependency>-->
     </dependencies>
     <build>
         <plugins>
