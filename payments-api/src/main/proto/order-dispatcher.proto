@@ -2,8 +2,14 @@ syntax = "proto3";
 
 import "order.proto";
 import "dispatch-response.proto";
+import "client-info.proto";
 package kazimir.cooltech.proto;
 
 service DispatcherService {
   rpc DispatchOrder(kazimir.cooltech.proto.Order) returns (kazimir.cooltech.proto.DispatchResponse) {}
+}
+
+service SubscriptionService {
+  rpc Subscribe(kazimir.cooltech.proto.SubscribeRequest) returns (kazimir.cooltech.proto.SubscribeResponse) {}
+  rpc UnSubscribe(kazimir.cooltech.proto.UnSubscribeRequest) returns (kazimir.cooltech.proto.SubscribeResponse) {}
 }

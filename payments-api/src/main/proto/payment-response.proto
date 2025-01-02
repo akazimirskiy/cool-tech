@@ -1,0 +1,10 @@
+syntax="proto3";
+
+package kazimir.cooltech.proto;
+
+message PaymentResponse {
+  string id = 1;
+  string order_id = 2;
+  string status = 3;
+  string payment_processor_id = 4;
+}

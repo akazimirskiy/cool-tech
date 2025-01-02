@@ -13,3 +13,8 @@ out/
 .settings
 .classpath
 .factorypath
+/.mvn/jvm.config
+/micronaut-cli.yml
+/mvnw
+/mvnw.bat
+/.mvn/

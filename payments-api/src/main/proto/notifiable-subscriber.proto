@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+import "order.proto";
+import "dispatch-response.proto";
+package kazimir.cooltech.proto;
+
+service NotifiableSubscriber {
+    rpc accept_notification(kazimir.cooltech.proto.Order) returns (kazimir.cooltech.proto.DispatchResponse) {}
+}

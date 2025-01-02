@@ -15,7 +15,7 @@
     </parent>
     <properties>
         <packaging>jar</packaging>
-        <jdk.version>21</jdk.version>
+        <jdk.version>17</jdk.version>
         <release.version>21</release.version>
         <micronaut.version>4.7.3</micronaut.version>
         <exec.mainClass>kazimir.cooltech.ApplicationKt</exec.mainClass>
@@ -33,27 +33,27 @@
         <dependency>
             <groupId>com.google.protobuf</groupId>
             <artifactId>protobuf-java</artifactId>
-            <version>4.29.2</version> <!-- Совместимая версия -->
+            <version>4.29.2</version>
         </dependency>
         <dependency>
             <groupId>io.micronaut.grpc</groupId>
             <artifactId>micronaut-grpc-server-runtime</artifactId>
-            <version>4.8.0</version> <!-- Версия должна совпадать с вашей версией Micronaut -->
+            <version>4.8.0</version>
         </dependency>
         <dependency>
             <groupId>io.grpc</groupId>
             <artifactId>grpc-core</artifactId>
-            <version>1.69.0</version> <!-- Совместимая версия -->
+            <version>1.69.0</version>
         </dependency>
         <dependency>
             <groupId>io.grpc</groupId>
             <artifactId>grpc-netty</artifactId>
-            <version>1.69.0</version> <!-- Совместимая версия -->
+            <version>1.69.0</version>
         </dependency>
         <dependency>
             <groupId>io.grpc</groupId>
             <artifactId>grpc-protobuf</artifactId>
-            <version>1.69.0</version> <!-- Совместимая версия -->
+            <version>1.69.0</version>
         </dependency>
         <dependency>
             <groupId>io.grpc</groupId>
@@ -207,7 +207,7 @@
                             </annotationProcessorPaths>
                             <annotationProcessorArgs>
                                 <annotationProcessorArg>micronaut.processing.group=kazimir.cooltech</annotationProcessorArg>
-                                <annotationProcessorArg>micronaut.processing.module=payment-service</annotationProcessorArg>
+                                <annotationProcessorArg>micronaut.processing.module=order-dispatcher</annotationProcessorArg>
                             </annotationProcessorArgs>
                         </configuration>
                     </execution>

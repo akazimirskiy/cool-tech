@@ -4,8 +4,9 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>kazimir.cooltech</groupId>
   <artifactId>payment-service</artifactId>
-  <version>1.0.0-SNAPHOT</version>
+  <version>1.0.0-SNAPSHOT</version>
   <packaging>${packaging}</packaging>
+
   <parent>
     <groupId>io.micronaut.platform</groupId>
     <artifactId>micronaut-parent</artifactId>
@@ -14,7 +15,7 @@
   </parent>
   <properties>
     <packaging>jar</packaging>
-    <jdk.version>21</jdk.version>
+    <jdk.version>17</jdk.version>
     <release.version>21</release.version>
     <micronaut.version>4.7.3</micronaut.version>
     <exec.mainClass>kazimir.cooltech.ApplicationKt</exec.mainClass>
@@ -27,8 +28,53 @@
       <url>https://repo.maven.apache.org/maven2</url>
     </repository>
   </repositories>
-
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>io.grpc</groupId>
+        <artifactId>grpc-bom</artifactId>
+        <version>1.69.0</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
   <dependencies>
+    <dependency>
+      <groupId>org.yaml</groupId>
+      <artifactId>snakeyaml</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.google.protobuf</groupId>
+      <artifactId>protobuf-java</artifactId>
+      <version>4.29.2</version>
+    </dependency>
+    <dependency>
+      <groupId>io.micronaut.grpc</groupId>
+      <artifactId>micronaut-grpc-server-runtime</artifactId>
+      <version>4.8.0</version>
+    </dependency>
+    <dependency>
+      <groupId>io.grpc</groupId>
+      <artifactId>grpc-core</artifactId>
+<!--      <version>1.69.0</version>-->
+    </dependency>
+    <dependency>
+      <groupId>io.grpc</groupId>
+      <artifactId>grpc-netty</artifactId>
+<!--      <version>1.69.0</version>-->
+    </dependency>
+    <dependency>
+      <groupId>io.grpc</groupId>
+      <artifactId>grpc-protobuf</artifactId>
+<!--      <version>1.69.0</version>-->
+    </dependency>
+    <dependency>
+      <groupId>io.grpc</groupId>
+      <artifactId>grpc-stub</artifactId>
+<!--      <version>1.69.0</version>-->
+    </dependency>
     <dependency>
       <groupId>kazimir.cooltech</groupId>
       <artifactId>payments-api</artifactId>
@@ -96,11 +142,17 @@
       <artifactId>spock-core</artifactId>
       <scope>test</scope>
       <exclusions>
-          <exclusion>
-            <groupId>org.apache.groovy</groupId>
-            <artifactId>groovy-all</artifactId>
-          </exclusion>
-        </exclusions>
+        <exclusion>
+          <groupId>org.apache.groovy</groupId>
+          <artifactId>groovy-all</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.platform</groupId>
+      <artifactId>junit-platform-engine</artifactId>
+      <version>1.10.0</version> <!-- Совместимая версия -->
+      <scope>test</scope>
     </dependency>
   </dependencies>
   <build>
@@ -149,23 +201,24 @@
             <configuration>
               <sourceDirs>
                 <sourceDir>${project.basedir}/src/main/kotlin</sourceDir>
+                <sourceDir>${project.build.directory}/generated-sources/</sourceDir>
               </sourceDirs>
               <annotationProcessorPaths combine.self="override">
-               <annotationProcessorPath>
-                 <groupId>io.micronaut</groupId>
-                 <artifactId>micronaut-inject-java</artifactId>
-                 <version>${micronaut.core.version}</version>
-               </annotationProcessorPath>
-               <annotationProcessorPath>
-                 <groupId>io.micronaut</groupId>
-                 <artifactId>micronaut-graal</artifactId>
-                 <version>${micronaut.core.version}</version>
-               </annotationProcessorPath>
-               <annotationProcessorPath>
-                 <groupId>io.micronaut.serde</groupId>
-                 <artifactId>micronaut-serde-processor</artifactId>
-                 <version>${micronaut.serialization.version}</version>
-               </annotationProcessorPath>
+                <annotationProcessorPath>
+                  <groupId>io.micronaut</groupId>
+                  <artifactId>micronaut-inject-java</artifactId>
+                  <version>${micronaut.core.version}</version>
+                </annotationProcessorPath>
+                <annotationProcessorPath>
+                  <groupId>io.micronaut</groupId>
+                  <artifactId>micronaut-graal</artifactId>
+                  <version>${micronaut.core.version}</version>
+                </annotationProcessorPath>
+                <annotationProcessorPath>
+                  <groupId>io.micronaut.serde</groupId>
+                  <artifactId>micronaut-serde-processor</artifactId>
+                  <version>${micronaut.serialization.version}</version>
+                </annotationProcessorPath>
               </annotationProcessorPaths>
               <annotationProcessorArgs>
                 <annotationProcessorArg>micronaut.processing.group=kazimir.cooltech</annotationProcessorArg>
@@ -227,64 +280,62 @@
           </execution>
         </executions>
       </plugin>
-      <plugin>
-        <groupId>kr.motd.maven</groupId>
-        <artifactId>os-maven-plugin</artifactId>
-        <version>1.6.2</version>
-        <executions>
-          <execution>
-            <goals>
-              <goal>detect</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.xolstice.maven.plugins</groupId>
-        <artifactId>protobuf-maven-plugin</artifactId>
-        <version>0.6.1</version>
-        <executions>
-          <execution>
-            <id>compile</id>
-            <goals>
-              <goal>compile</goal>
-            </goals>
-            <configuration>
-              <protocArtifact>com.google.protobuf:protoc:3.19.1:exe:${os.detected.classifier}</protocArtifact>
-              <includeStdTypes>true</includeStdTypes>
-              <protoPathElements>
-                <protoPathElement>${project.build.directory}/payments-api</protoPathElement>
-              </protoPathElements>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-dependency-plugin</artifactId>
-        <version>3.6.0</version>
-        <executions>
-          <execution>
-            <id>unpack-proto-files</id>
-            <phase>generate-sources</phase>
-            <goals>
-              <goal>unpack</goal>
-            </goals>
-            <configuration>
-              <artifactItems>
-                <artifactItem>
-                  <groupId>kazimir.cooltech</groupId>
-                  <artifactId>payments-api</artifactId>
-                  <version>1.0.0-SNAPSHOT</version>
-                  <type>jar</type>
-                  <includes>**/*.proto</includes>
-                  <outputDirectory>${project.build.directory}/payments-api</outputDirectory>
-                </artifactItem>
-              </artifactItems>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
+      <!--            <plugin>-->
+      <!--                <groupId>kr.motd.maven</groupId>-->
+      <!--                <artifactId>os-maven-plugin</artifactId>-->
+      <!--                <version>1.6.2</version>-->
+      <!--                <executions>-->
+      <!--                    <execution>-->
+      <!--                        <goals>-->
+      <!--                            <goal>detect</goal>-->
+      <!--                        </goals>-->
+      <!--                    </execution>-->
+      <!--                </executions>-->
+      <!--            </plugin>-->
+      <!--            <plugin>-->
+      <!--                <groupId>org.xolstice.maven.plugins</groupId>-->
+      <!--                <artifactId>protobuf-maven-plugin</artifactId>-->
+      <!--                <version>0.6.1</version>-->
+      <!--                <executions>-->
+      <!--                    <execution>-->
+      <!--                        <id>compile</id>-->
+      <!--                        <goals>-->
+      <!--                            <goal>compile</goal>-->
+      <!--                        </goals>-->
+      <!--                        <configuration>-->
+      <!--                            <protocArtifact>com.google.protobuf:protoc:3.19.1:exe:${os.detected.classifier}</protocArtifact>-->
+      <!--                            <protoSourceRoot>${project.build.directory}/proto</protoSourceRoot>-->
+      <!--                        </configuration>-->
+      <!--                    </execution>-->
+      <!--                </executions>-->
+      <!--            </plugin>-->
+      <!--            <plugin>-->
+      <!--                <groupId>org.apache.maven.plugins</groupId>-->
+      <!--                <artifactId>maven-dependency-plugin</artifactId>-->
+      <!--                <version>3.6.0</version>-->
+      <!--                <executions>-->
+      <!--                    <execution>-->
+      <!--                        <id>unpack-proto-files</id>-->
+      <!--                        <phase>initialize</phase>-->
+      <!--                        <goals>-->
+      <!--                            <goal>unpack</goal>-->
+      <!--                        </goals>-->
+      <!--                    </execution>-->
+      <!--                </executions>-->
+      <!--                <configuration>-->
+      <!--                    <artifactItems>-->
+      <!--                        <artifactItem>-->
+      <!--                            <groupId>kazimir.cooltech</groupId>-->
+      <!--                            <artifactId>payments-api</artifactId>-->
+      <!--                            <version>1.0.0-SNAPSHOT</version>-->
+      <!--                            <type>jar</type>-->
+      <!--                            <includes>**/*.proto</includes>-->
+      <!--                            <outputDirectory>${project.build.directory}/proto</outputDirectory>-->
+      <!--                        </artifactItem>-->
+      <!--                    </artifactItems>-->
+      <!--                    <verbose>true</verbose>-->
+      <!--                </configuration>-->
+      <!--            </plugin>-->
     </plugins>
   </build>
   <pluginRepositories>

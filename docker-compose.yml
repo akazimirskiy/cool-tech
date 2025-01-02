@@ -3,8 +3,13 @@ services:
   payment-service:
     build:
       context: ./payment-service
+    ports:
+      - "50050:50050"
+    deploy:
+      replicas: 1
     depends_on:
       - kafka
+      - order-dispatcher
   order-dispatcher:
     build:
       context: ./order-dispatcher

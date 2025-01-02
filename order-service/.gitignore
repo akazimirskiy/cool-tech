@@ -13,3 +13,8 @@ out/
 .settings
 .classpath
 .factorypath
+/mvnw
+/mvnw.bat
+/order-service.iml
+/.mvn/
+/aot-jar.properties

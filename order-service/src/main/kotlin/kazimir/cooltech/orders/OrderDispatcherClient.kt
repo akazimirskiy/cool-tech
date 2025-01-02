@@ -5,8 +5,8 @@ import io.grpc.ManagedChannelBuilder
 import io.micronaut.context.annotation.Value
 import jakarta.inject.Singleton
 import kazimir.cooltech.proto.DispatcherServiceGrpc
-import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import java.util.*
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 import javax.annotation.PostConstruct
@@ -17,8 +17,9 @@ class OrderDispatcherClient {
     private lateinit var dispatcherAddress: String
     @Value("\${dispatcher.server.port}")
     private var dispatcherPort: Int = 0
+    private val orderProcessorId = UUID.randomUUID().toString()
 
-    private val log: Logger = LoggerFactory.getLogger(OrderListener::class.java)
+    private val log = LoggerFactory.getLogger(OrderListener::class.java)
     private lateinit var managedChannel : ManagedChannel
     private lateinit var dispatcherService: DispatcherServiceGrpc.DispatcherServiceFutureStub
     private val executor = Executors.newFixedThreadPool(3)
@@ -36,34 +37,6 @@ class OrderDispatcherClient {
 
     fun dispatchOrder(order: Order) {
         log.info("Dispatching order: ${order.id}")
-//        val orderToDispatch = try {
-//            log.info("Preparing Order object for dispatching")
-//            log.info("Order ID: ${order.id}")
-//            log.info("Product ID: ${order.productId}")
-//            log.info("User ID: ${order.userId}")
-//            log.info("Quantity: ${order.quantity}")
-//            log.info("Price: ${order.price}")
-//
-//            kazimir.cooltech.proto.OrderOuterClass.Order.newBuilder()
-//                .setId(order.id.toString())
-//                .setProductId(order.productId.toString())
-//                .setUserId(order.userId.toString())
-//                .setQuantity(order.quantity)
-//                .setPrice(order.price)
-//                .build()
-//        } catch (e: Exception) {
-//            log.error("Error while preparing Order object: ${e.message}", e)
-//            throw e
-//        }
-//        log.info("Created orderToDispatch object")
-//        try {
-//            log.info("Sending to dispatcher : ${orderToDispatch.id}")
-//            val response = dispatcherService.withDeadlineAfter(5, TimeUnit.SECONDS).dispatchOrder(orderToDispatch)
-//            log.info("Dispatching result: ${response.status}")
-//        } catch (e: Exception) {
-//            log.error("Error dispatching order: ${order.id}")
-//        }
-
         executor.submit {
             log.info("Submitting order: ${order.id}")
             val orderToDispatch = kazimir.cooltech.proto.OrderOuterClass.Order.newBuilder()
@@ -72,6 +45,7 @@ class OrderDispatcherClient {
                 .setUserId(order.userId.toString())
                 .setQuantity(order.quantity)
                 .setPrice(order.price)
+                .setOrderProcessorId(orderProcessorId)
                 .build()
             val response = dispatcherService.withDeadlineAfter(5, TimeUnit.SECONDS).dispatchOrder(orderToDispatch)
             if (!response.isDone && !response.isCancelled) {

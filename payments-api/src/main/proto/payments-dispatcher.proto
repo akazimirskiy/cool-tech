@@ -1,9 +1,0 @@
-syntax = "proto3";
-
-import "order.proto";
-import "dispatch-response.proto";
-package kazimir.cooltech.proto;
-
-service PayOrderService {
-    rpc pay(kazimir.cooltech.proto.Order) returns (kazimir.cooltech.proto.DispatchResponse) {}
-}

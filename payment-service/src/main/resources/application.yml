@@ -1,0 +1,10 @@
+#Sat Dec 28 14:55:04 UTC 2024
+micronaut:
+  application:
+    name: payment-service
+dispatcher:
+  host: order-dispatcher
+  port: 50051
+grpc:
+  server:
+    port: 50050
